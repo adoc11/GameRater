@@ -1,0 +1,12 @@
+com.inet.browser
+com.inet.editor
+com.inet.editor.handler
+com.inet.html
+com.inet.html.actions
+com.inet.html.css
+com.inet.html.handler
+com.inet.html.image
+com.inet.html.parser
+com.inet.html.views
+com.inet.html.views.form
+com.inet.html.views.layouts
