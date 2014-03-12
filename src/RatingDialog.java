@@ -1,25 +1,18 @@
 import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Date;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.border.EmptyBorder;
-import javax.swing.BoxLayout;
-
-import java.awt.Component;
-
-import javax.swing.Box;
-
-import java.awt.Dimension;
-import java.awt.Window.Type;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 
 
 public class RatingDialog extends JDialog implements ActionListener {
@@ -31,7 +24,10 @@ public class RatingDialog extends JDialog implements ActionListener {
 	 * Create the dialog.
 	 */
 	public RatingDialog(int value) {
-		setTitle("Rating");
+		int row = GameRater.gameTable.convertRowIndexToModel(GameRater.gameTable.getSelectedRow());
+		String gameTitle = GameRater.tblmodel.getValueAt(row, 0).toString();
+
+		setTitle("Rating - " + gameTitle);
 		setBounds(100, 100, 448, 200);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(30, 5, 5, 5));
@@ -78,7 +74,7 @@ public class RatingDialog extends JDialog implements ActionListener {
 			}
 		}
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if ("Save".equals(e.getActionCommand()))
@@ -86,14 +82,14 @@ public class RatingDialog extends JDialog implements ActionListener {
 			int inx = GameRater.gameTable.convertRowIndexToModel(GameRater.gameTable.getSelectedRow());
 			GameRater.tblmodel.setValueAt(String.valueOf(slider.getValue()), inx, GameRater.gameTable.getSelectedColumn());
 			GameRater.tblmodel.setValueAt(new Date(), inx, 3);
-			
+
 			RatingDialog.this.setVisible(false);
 		}
 		else if ("Cancel".equals(e.getActionCommand()))
 		{
 			RatingDialog.this.setVisible(false);
 		}
-		
+
 	}
 
 }

@@ -1,25 +1,18 @@
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.BoxLayout;
-
 import java.awt.Component;
-
-import javax.swing.Box;
-
 import java.awt.Dimension;
-import java.awt.Window.Type;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 
 public class GameTitleDialog extends JDialog implements ActionListener{
@@ -31,7 +24,10 @@ public class GameTitleDialog extends JDialog implements ActionListener{
 	 * Create the dialog.
 	 */
 	public GameTitleDialog(String title) {
-		setTitle("Title");
+		int row = GameRater.gameTable.convertRowIndexToModel(GameRater.gameTable.getSelectedRow());
+		String gameTitle = GameRater.tblmodel.getValueAt(row, 0).toString();
+
+		setTitle("Title - " + gameTitle);
 		setBounds(100, 100, 448, 200);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(30, 5, 5, 5));
@@ -74,7 +70,8 @@ public class GameTitleDialog extends JDialog implements ActionListener{
 			}
 		}
 	}
-	
+
+	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
 		if ("Save".equals(e.getActionCommand()))
@@ -82,7 +79,7 @@ public class GameTitleDialog extends JDialog implements ActionListener{
 			int inx = GameRater.gameTable.convertRowIndexToModel(GameRater.gameTable.getSelectedRow());
 			GameRater.tblmodel.setValueAt(textField.getText(), inx, GameRater.gameTable.getSelectedColumn());
 			GameRater.tblmodel.setValueAt(new Date(), inx, 3);
-			
+
 			GameTitleDialog.this.setVisible(false);
 		}
 		else if ("Cancel".equals(e.getActionCommand()))

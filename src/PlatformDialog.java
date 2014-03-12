@@ -1,48 +1,40 @@
 import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Date;
+import java.util.Vector;
 
-import javax.swing.ComboBoxModel;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.BoxLayout;
-
-import java.awt.Component;
-
-import javax.swing.Box;
-
-import java.awt.Dimension;
-import java.awt.Window.Type;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Vector;
-
-import javax.swing.JComboBox;
 
 
 public class PlatformDialog extends JDialog implements ActionListener, ClosePlatformDialogEvent {
 
 	private final JPanel contentPanel = new JPanel();
-	
+
 	private JComboBox comboBox;
 	private Vector<String> platforms;
-	private ReadWriteCSV rw = new ReadWriteCSV();
-	private String filename = "data/platforms.csv";
-	private JDialog addPlatformDialog;
+	private final ReadWriteCSV rw = new ReadWriteCSV();
+	private final String filename = "data/platforms.csv";
+	private final JDialog addPlatformDialog;
 
 	/**
 	 * Create the dialog.
 	 */
 	public PlatformDialog(String value) {
-		setTitle("Platform");
+		int row = GameRater.gameTable.convertRowIndexToModel(GameRater.gameTable.getSelectedRow());
+		String gameTitle = GameRater.tblmodel.getValueAt(row, 0).toString();
+
+		setTitle("Platform - " + gameTitle);
 		setBounds(100, 100, 448, 200);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(30, 5, 5, 5));
@@ -51,7 +43,7 @@ public class PlatformDialog extends JDialog implements ActionListener, ClosePlat
 		{
 			comboBox = new JComboBox();
 			platforms = rw.loadPlatforms(filename);
-			
+
 			comboBox.setModel(new DefaultComboBoxModel(platforms));
 			comboBox.addActionListener(this);
 			comboBox.setActionCommand("Platform");
@@ -87,16 +79,17 @@ public class PlatformDialog extends JDialog implements ActionListener, ClosePlat
 				Component horizontalGlue = Box.createHorizontalGlue();
 				buttonPane.add(horizontalGlue);
 			}
-			
+
 		}
 		addPlatformDialog = new AddPlatformDialog(platforms, this);
 	}
-	
+
+	@Override
 	public void closePlatformEvent(String p)
 	{
 		comboBox.setSelectedItem(p);
 	}
-	
+
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -105,7 +98,7 @@ public class PlatformDialog extends JDialog implements ActionListener, ClosePlat
 			int inx = GameRater.gameTable.convertRowIndexToModel(GameRater.gameTable.getSelectedRow());
 			GameRater.tblmodel.setValueAt(comboBox.getSelectedItem(), inx, GameRater.gameTable.getSelectedColumn());
 			GameRater.tblmodel.setValueAt(new Date(), inx, 3);
-			
+
 			PlatformDialog.this.setVisible(false);
 		}
 		else if ("Cancel".equals(e.getActionCommand()))
@@ -121,6 +114,6 @@ public class PlatformDialog extends JDialog implements ActionListener, ClosePlat
 				addPlatformDialog.setVisible(true);
 			}
 		}
-		
+
 	}
 }
