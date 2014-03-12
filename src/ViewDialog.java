@@ -94,7 +94,7 @@ public class ViewDialog extends JDialog implements ActionListener, ClosePlatform
 
 		setTitle(title);
 
-		setBounds(100, 100, 655, 444);
+		setBounds(100, 100, 655, 600);
 		getContentPane().setLayout(new BorderLayout());
 
 		JPanel formatPanel = new JPanel();
@@ -102,7 +102,7 @@ public class ViewDialog extends JDialog implements ActionListener, ClosePlatform
 		formatPanel.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
 		GridBagLayout gbl_formatPanel = new GridBagLayout();
 		gbl_formatPanel.columnWidths = new int[]{68, 417, 150, 0};
-		gbl_formatPanel.rowHeights = new int[]{42, 29, 29, 50, 29, 36, 144, 0};
+		gbl_formatPanel.rowHeights = new int[]{42, 29, 29, 50, 29, 36, 300, 0};
 		gbl_formatPanel.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
 		gbl_formatPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		formatPanel.setLayout(gbl_formatPanel);
